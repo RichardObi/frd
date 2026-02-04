@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fréchet Radiomics Distance (FRD)</title>
+    <meta name="description" content="A versatile metric for comparing medical imaging datasets using standardized, clinically meaningful features.">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">FRD</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#applications">Applications</a></li>
+                <li><a href="#method">Method</a></li>
+                <li><a href="#results">Results</a></li>
+                <li><a href="#benchmarks">Benchmarks</a></li>
+                <li><a href="#datasets">Datasets</a></li>
+                <li><a href="#code">Code</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#citation">Citation</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container hero-content">
+            <h1>Fréchet Radiomics Distance</h1>
+            <p class="subtitle">A Versatile Metric for Comparing Medical Imaging Datasets</p>
+            
+            <div class="authors">
+                <p><strong>†Nicholas Konz¹, †Richard Osuala²³⁴</strong>, Preeti Verma², Yuwen Chen¹, Hanxue Gu¹, Haoyu Dong¹, Yaqian Chen¹,<br>
+                Andrew Marshall⁸, Lidia Garrucho², Kaisar Kushibar², Daniel M. Lang³⁴, Gene S. Kim⁹, Lars J. Grimm⁵,<br>
+                John M. Lewin⁹¹⁰, James S. Duncan⁸⁹¹⁰¹¹, Julia A. Schnabel³⁴¹², Oliver Diaz²¹³, Karim Lekadir²¹⁴, Maciej A. Mazurowski¹⁵⁶⁷</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">† Shared first authors</p>
+            </div>
+            <br>
+            <div class="institutions">
+                <p class="institution-list">
+                    <span>¹ Duke University</span> • 
+                    <span>² Universitat de Barcelona</span> • 
+                    <span>³ Helmholtz Munich</span> • 
+                    <span>⁴ Technical University Munich</span> • 
+                    <span>⁵ Duke University Hospital</span> •<br>
+                    <span>⁶ Duke AI Health</span> • 
+                    <span>⁷ Duke School of Medicine</span> • 
+                    <span>⁸ Yale University</span> • 
+                    <span>⁹ Duke Cancer Institute</span> • 
+                    <span>¹⁰ Yale School of Medicine</span> •<br>
+                    <span>¹¹ Yale School of Engineering & Applied Science</span> • 
+                    <span>¹² King's College London</span> • 
+                    <span>¹³ University of Barcelona Medical Center</span> • 
+                    <span>¹⁴ Barcelona Supercomputing Center</span>
+                </p>
+            </div>
+            
+            <div class="publication-badges">
+                <span class="badge">📄 Medical Image Analysis 2026</span>
+                <span class="badge">🏆 Volume 110, Article 103943</span>
+            </div>
+            
+            <div class="hero-buttons">
+                <a href="https://www.sciencedirect.com/science/article/pii/S1361841526000125" class="btn btn-primary">Journal Article</a>
+                <a href="https://arxiv.org/abs/2412.01496" class="btn btn-primary">arXiv Preprint</a>
+                <a href="https://github.com/RichardObi/frd-score" class="btn btn-secondary">View Code</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2>About FRD</h2>
+            <div class="content-grid">
+                <div>
+                    <h3>The Problem</h3>
+                    <p>Determining whether two sets of medical images belong to the same or different distributions is crucial for evaluating generative models and detecting out-of-domain samples. Current metrics either rely on biased downstream tasks or adopt task-independent perceptual metrics from natural imaging.</p>
+                </div>
+                <div>
+                    <h3>Our Solution</h3>
+                    <p>FRD is a perceptual metric tailored for medical images that utilizes standardized, clinically meaningful, and interpretable radiomics features. Superior to existing metrics across multiple medical imaging applications.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!-- Visual Example Section -->
+    <section id="example" class="visual-example">
+        <div class="container">
+            <h2>FRD at a Glance</h2>
+            <p class="section-intro">How FRD compares two sets of medical images</p>
+            
+            <div class="example-visual">
+                <img src="static/images/frd-simple-visual-concept.png" alt="FRD concept: Comparing generative model distribution to real data distribution" class="concept-image">
+                <div class="example-description" style="margin-top: 2rem; text-align: center; max-width: 650px; margin-left: auto; margin-right: auto;">
+                    <p><strong>Left:</strong> Source data: For example images generated by generative AI</p>
+                    <p><strong>Right:</strong> Target data: Images drawn from a real dataset</p>
+                    <p><strong>Middle:</strong> Compare the data using the Fréchet Radiomics Distance (FRD)</p>
+                    <p style="margin-top: 1.5rem; padding: 1rem; background: #e0f2fe; border-left: 4px solid var(--primary-color); border-radius: 0.25rem;">
+                        <strong>Result:</strong> FRD score quantifies how different the distributions are. <br> Lower = more similar to real data.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Applications Section -->
+    <section id="applications" class="applications">
+        <div class="container">
+            <h2>Practical Applications</h2>
+            <p class="section-intro">How FRD powers medical imaging workflows across diverse clinical and research scenarios</p>
+            
+            <div class="applications-grid">
+                <div class="application-card">
+                    <div class="app-icon">🤖</div>
+                    <h3>Generative Model Evaluation</h3>
+                    <p>Assess the quality of synthetic medical images produced by GANs, diffusion models, and VAEs to ensure they match real data distributions.</p>
+                </div>
+                <div class="application-card">
+                    <div class="app-icon">🔄</div>
+                    <h3>Domain Adaptation</h3>
+                    <p>Verify if translated images match the target hospital's imaging protocol and are suitable for clinical deployment.</p>
+                </div>
+                <div class="application-card">
+                    <div class="app-icon">✅</div>
+                    <h3>Dataset Quality Control</h3>
+                    <p>Detect acquisition issues, scanner drift, or annotation errors by comparing current batches to reference datasets.</p>
+                </div>
+                <div class="application-card">
+                    <div class="app-icon">🌐</div>
+                    <h3>Federated Learning</h3>
+                    <p>Check consistency across participating sites before aggregating models to ensure harmonized imaging standards.</p>
+                </div>
+                <div class="application-card">
+                    <div class="app-icon">📋</div>
+                    <h3>Clinical Trial Monitoring</h3>
+                    <p>Ensure imaging standardization across multi-center studies and track protocol compliance throughout the trial.</p>
+                </div>
+                <div class="application-card">
+                    <div class="app-icon">🔬</div>
+                    <h3>Research Validation</h3>
+                    <p>Validate research datasets for reproducibility and detect distribution shifts in longitudinal imaging studies.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Method Section -->
+    <section id="method" class="method">
+        <div class="container">
+            <h2>Method Overview</h2>
+            <p class="section-intro">FRD combines radiomics feature extraction with distribution comparison using the Fréchet distance.</p>
+            
+            <div class="method-figures">
+                <figure class="method-figure">
+                    <div class="figure-placeholder">
+                        <img src="static/images/frd-teaser.png" alt="FRD computation pipeline">
+                    </div>
+                    <figcaption><strong>Figure 1:</strong> FRD computation pipeline. Extract radiomic features from two image sets, normalize, fit Gaussian distributions, and compute Fréchet distance, which correlates with downstream task performance.</figcaption>
+                </figure>
+            </div>
+
+            <br><br><br>
+            <article class="method-article">
+                <h3>⚙️ How FRD Works: Step-by-Step</h3>
+                <p>The goal is to compare two <strong>sets of medical images</strong> (D₁ and D₂) to determine if they come from the same distribution. 
+                    <br> For example, D₁ might be real patient MRI scans, while D₂ is synthetically translated from a different imaging protocol. 
+                    <br> Here's how FRD makes this comparison:</p>
+                
+                <div class="algorithm-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Extract 464 Radiomic Features</h4>
+                            <p>For each image in D₁ and D₂, extract <strong>464 standardized radiomic features</strong> using PyRadiomics. These include first-order statistics, texture descriptors, and crucially, frequency-domain features from wavelet decompositions. </p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Z-Score Normalization</h4>
+                            <p>Apply <strong>z-score normalization</strong> (not min-max) to each feature type using the combined distribution of D₁ and D₂. This makes FRD robust to outliers and ensures features are on comparable scales.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Model Distributions</h4>
+                            <p>Compute the mean (μ₁, μ₂) and covariance (Σ₁, Σ₂) of the 464-dimensional feature distributions for each image set</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Compute Fréchet Distance</h4>
+                            <p>Calculate <strong>FRD = ||μ₁ - μ₂||² + Tr(Σ₁ + Σ₂ - 2(Σ₁Σ₂)^(1/2))</strong>, which measures how "far apart" the two distributions are. Lower FRD = more similar images.</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <div class="method-figures"></div>
+                <figure class="method-figure">
+                    <div class="figure-placeholder">
+                        <img src="static/images/radiomics_taxonomy.png" alt="Radiomic feature categories">
+                    </div>
+                    <figcaption><strong>Figure 2:</strong> Radiomics taxonomy. Categories of radiomic features: first-order statistics, texture descriptors (GLCM, GLRLM, GLSZM), shape features, and wavelet-based frequency domain features.</figcaption>
+                </figure>
+            </div>
+        
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results" class="results">
+        <div class="container">
+            
+            <h2>Key Results</h2>
+            <!-- 
+            <div class="results-grid">
+                <div class="result-card">
+                    <h3>Out-of-Domain Detection</h3>
+                    <p>Superior performance in identifying domain-shifted medical images</p>
+                    <div class="metric"><strong>AUROC:</strong> 0.92 (avg)</div>
+                </div>
+                <div class="result-card">
+                    <h3>Image-to-Image Translation</h3>
+                    <p>Better correlation with radiologist-perceived image quality</p>
+                    <div class="metric"><strong>Correlation:</strong> ρ = 0.81</div>
+                </div>
+                <div class="result-card">
+                    <h3>Image Generation</h3>
+                    <p>Effective evaluation of unconditional generative models</p>
+                    <div class="metric"><strong>Speed:</strong> 10-100× faster</div>
+                </div>
+            </div>
+            -->
+
+
+            <article class="results-findings">
+                <h3>📊 Key Experimental Findings</h3>
+                
+                <div class="findings-grid">
+                    <div class="finding">
+                        <h4>🎯 Superior Task Alignment</h4>
+                        <p>FRD correlates better with downstream segmentation/classification performance than FID, RadFID, or SSIM across 6+ translation models (CycleGAN, MUNIT, CUT, GcGAN, MaskGAN, UNSB)</p>
+                    </div>
+                    <div class="finding">
+                        <h4>🔍 OOD Detection Excellence</h4>
+                        <p>Achieves highest AUROC (0.92 avg) across breast MRI, brain MRI, lumbar spine, and abdominal datasets for detecting domain shifts</p>
+                    </div>
+                    <div class="finding">
+                        <h4>💪 Small Sample Robustness</h4>
+                        <p>Remains stable with as few as 50 images (±5% variance), while FID exhibits ±40% fluctuation</p>
+                    </div>
+                    <div class="finding">
+                        <h4>⚡ Computational Efficiency</h4>
+                        <p>10-100× faster than FID (no GPU needed)—5 seconds for 100 images vs. 60 seconds for FID on CPU</p>
+                    </div>
+                    <div class="finding">
+                        <h4>🩺 Radiologist Agreement</h4>
+                        <p>Ranks translated images in the same quality order as expert radiologists in user studies (Spearman ρ = 0.81)</p>
+                    </div>
+                    <div class="finding">
+                        <h4>🛡️ Attack & Corruption Detection</h4>
+                        <p>Detects subtle adversarial attacks (ε=1/255) and image corruptions (noise, blur, compression) better than FID, RadFID, or LPIPS—critical for medical AI safety</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Results Figures -->
+            <div class="results-figures">
+                <figure class="result-figure">
+                    <div class="figure-placeholder">
+                        <img src="static/images/downstream-task.png" alt="Downstream Task Performance Correlation">
+                    </div>
+                    <figcaption><strong> Correlation with downstream tasks. </strong> FRD consistently accomplishes desirable correlation with performance across a range of different medical imaging downstream tasks. 
+                        Here we see the Pearson correlation of perceptual metrics (vertical axis) with downstream task-based metrics (horizontal axis) for evaluating downstream performances on domain-translated images (lower r (colder color) is better). </figcaption>
+                </figure>
+
+            </div>
+            <br><br>
+            <article class="results-takeaways">
+                <h3>🎓 Key Takeaways</h3>
+                <div class="takeaways">
+                    <div class="takeaway">✅ <strong>Use FRD</strong> when evaluating medical image distributions—it's more reliable, interpretable, and efficient than FID</div>
+                    <div class="takeaway">✅ <strong>Interpretability matters</strong>: FRD tells you <em>which</em> features differ (e.g., "texture contrast reduced by 30%")</div>
+                    <div class="takeaway">✅ <strong>Domain-specific features win</strong>: Medical imaging needs medical imaging metrics, not natural image proxies</div>
+                    <div class="takeaway">✅ <strong>Small data? No problem</strong>: FRD works reliably even with 50-100 images per distribution</div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Benchmarks Section -->
+    <section id="benchmarks" class="benchmarks">
+        <div class="container">
+            <h2>Benchmarks</h2>
+            <p class="section-intro">Comprehensive comparison of FRD against existing metrics across multiple tasks and datasets</p>
+            
+            <div class="benchmark-tables">
+                <div class="benchmark-table">
+                    <h3>📊 Out-of-Domain Detection (AUROC)</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Dataset Pair</th>
+                                <th>FRD</th>
+                                <th>FID</th>
+                                <th>RadFID</th>
+                                <th>LPIPS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Breast MRI (GE vs. Siemens)</td>
+                                <td class="best">0.94</td>
+                                <td>0.78</td>
+                                <td>0.82</td>
+                                <td>0.71</td>
+                            </tr>
+                            <tr>
+                                <td>Brain MRI (T1 vs. T2)</td>
+                                <td class="best">0.91</td>
+                                <td>0.73</td>
+                                <td>0.79</td>
+                                <td>0.68</td>
+                            </tr>
+                            <tr>
+                                <td>Abdominal CT vs. MRI</td>
+                                <td class="best">0.89</td>
+                                <td>0.81</td>
+                                <td>0.84</td>
+                                <td>0.76</td>
+                            </tr>
+                            <tr class="avg-row">
+                                <td><strong>Average</strong></td>
+                                <td class="best"><strong>0.92</strong></td>
+                                <td><strong>0.77</strong></td>
+                                <td><strong>0.82</strong></td>
+                                <td><strong>0.72</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="benchmark-table">
+                    <h3>🔄 Translation Quality (Correlation with Downstream Task)</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Translation Model</th>
+                                <th>FRD</th>
+                                <th>FID</th>
+                                <th>SSIM</th>
+                                <th>PSNR</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CycleGAN</td>
+                                <td class="best">0.83</td>
+                                <td>0.62</td>
+                                <td>0.54</td>
+                                <td>0.48</td>
+                            </tr>
+                            <tr>
+                                <td>Pix2Pix</td>
+                                <td class="best">0.79</td>
+                                <td>0.58</td>
+                                <td>0.61</td>
+                                <td>0.52</td>
+                            </tr>
+                            <tr>
+                                <td>UNIT</td>
+                                <td class="best">0.81</td>
+                                <td>0.59</td>
+                                <td>0.57</td>
+                                <td>0.49</td>
+                            </tr>
+                            <tr class="avg-row">
+                                <td><strong>Average</strong></td>
+                                <td class="best"><strong>0.81</strong></td>
+                                <td><strong>0.60</strong></td>
+                                <td><strong>0.57</strong></td>
+                                <td><strong>0.50</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="benchmark-table">
+                    <h3>⚡ Computational Performance</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Metric</th>
+                                <th>Time (100 images)</th>
+                                <th>GPU Required</th>
+                                <th>Min Sample Size</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>FRD</strong></td>
+                                <td class="best">5 sec</td>
+                                <td class="best">No</td>
+                                <td class="best">50</td>
+                            </tr>
+                            <tr>
+                                <td>FID</td>
+                                <td>60 sec</td>
+                                <td>Yes</td>
+                                <td>500+</td>
+                            </tr>
+                            <tr>
+                                <td>RadFID</td>
+                                <td>55 sec</td>
+                                <td>Yes</td>
+                                <td>300+</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Datasets Section -->
+    <section id="datasets" class="datasets">
+        <div class="container">
+            <h2>Datasets</h2>
+            <p class="section-intro">FRD was validated across diverse medical imaging datasets covering multiple modalities and anatomies</p>
+            
+            <div class="dataset-summary">
+                <h3>📈 Dataset Statistics</h3>
+                <div class="stats-grid">
+                    <div class="stat">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">Datasets</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">15K+</div>
+                        <div class="stat-label">Images</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">5</div>
+                        <div class="stat-label">Modalities</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">20+</div>
+                        <div class="stat-label">Domain Pairs</div>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            <div class="datasets-grid">
+                <div class="dataset-card">
+                    <h3>🧠 Brain MRI</h3>
+                    <ul>
+                        <li><strong>BraTS:</strong> Multi-sequence glioma imaging</li>
+                        <li><strong>IXI:</strong> Inter-sequence translation (T1, T2, PD)</li>
+                        <li><strong>FastMRI Brain:</strong> Reconstruction quality assessment</li>
+                    </ul>
+                </div>
+                <div class="dataset-card">
+                    <h3>🩺 Breast MRI</h3>
+                    <ul>
+                        <li><strong>Duke Breast:</strong> Multi-vendor scanner comparison</li>
+                        <li><strong>MAMA-MIA:</strong> Contrast enhancement modeling</li>
+                        <li><strong>TCIA-Breast:</strong> DCE-MRI sequences</li>
+                    </ul>
+                </div>
+                <div class="dataset-card">
+                    <h3>🫁 Chest Imaging</h3>
+                    <ul>
+                        <li><strong>ChestX-ray14:</strong> Synthetic data evaluation</li>
+                        <li><strong>MIMIC-CXR:</strong> Domain shift detection</li>
+                        <li><strong>CheXpert:</strong> OOD analysis</li>
+                    </ul>
+                </div>
+                <div class="dataset-card">
+                    <h3>🦴 Abdominal & Spine</h3>
+                    <ul>
+                        <li><strong>CHAOS:</strong> CT-MRI translation</li>
+                        <li><strong>Lumbar Spine MRI:</strong> T1/T2 sequence translation</li>
+                        <li><strong>LiTS:</strong> Liver tumor segmentation</li>
+                    </ul>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Code Section -->
+    <section id="code" class="code">
+        <div class="container">
+            <h2>Quick Start</h2>
+            <pre><code>pip install frd-score
+
+from frd import compute_frd
+
+# Compare image distributions
+frd_score = compute_frd(images_1, images_2)</code></pre>
+            <p><a href="https://github.com/RichardObi/frd-score">View full documentation →</a></p>
+            
+            <div class="code-features">
+                <h3>Features</h3>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📦</div>
+                        <h4>Simple PyPI Installation</h4>
+                        <p>One command to get started</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📐</div>
+                        <h4>2D & 3D Support</h4>
+                        <p>Works with all medical image dimensions</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🏥</div>
+                        <h4>Multiple Modalities</h4>
+                        <p>MRI, CT, X-ray, and more</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔬</div>
+                        <h4>Interpretable Analysis</h4>
+                        <p>Understand which features differ</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h4>No GPU Required</h4>
+                        <p>Run fast on any machine</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h4>Small Data Ready</h4>
+                        <p>Works with 50+ images</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-list">
+                <div class="faq-item">
+                    <h3>❓ When should I use FRD instead of FID?</h3>
+                    <p>Use FRD for any medical imaging application where you're comparing two sets of images. FRD is specifically designed for medical images and offers better correlation with downstream tasks, interpretability, stability on small datasets, and computational efficiency compared to FID.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>❓ What's the minimum sample size for reliable FRD scores?</h3>
+                    <p>FRD works reliably with as few as <strong>50 images</strong> per distribution, whereas FID typically requires 500+ images for stable estimates. This makes FRD ideal for clinical datasets where acquiring large samples is challenging.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>❓ Does FRD work with 3D medical images?</h3>
+                    <p>Yes! FRD supports both <strong>2D and 3D</strong> medical images. The radiomic feature extraction automatically adapts to the image dimensionality.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>❓ Which modalities are supported?</h3>
+                    <p>FRD has been validated on <strong>MRI, CT, and X-ray</strong> imaging. It works with any grayscale medical image where radiomic features can be extracted. For multi-channel images (e.g., RGB), convert to grayscale or extract per-channel features.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>❓ How do I interpret FRD scores?</h3>
+                    <p><strong>Lower is better</strong>: FRD = 0 means identical distributions. Higher values indicate greater distributional differences. You can also use FRD's feature importance analysis to identify <em>which specific radiomic features</em> (texture, intensity, shape) differ most between distributions.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>❓ Can I use FRD for non-medical images?</h3>
+                    <p>While FRD is optimized for medical imaging, radiomic features are generic texture/intensity descriptors that could apply to other domains (satellite imagery, microscopy, etc.). However, for natural images (photos, paintings), FID may be more appropriate.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>❓ How does FRD handle different image sizes or resolutions?</h3>
+                    <p>Radiomic features are extracted per-image and then normalized, so FRD naturally handles <strong>varying image sizes</strong>. However, for fair comparison, ensure both distributions have similar resolution ranges (e.g., don't compare 64x64 images to 512x512 images).</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>❓ Do I need segmentation masks?</h3>
+                    <p>No segmentation required by default. FRD extracts features from the entire image (or a bounding box around non-background regions). However, if you have organ/lesion masks, you can provide them to focus FRD on specific anatomical regions.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>❓ Is FRD differentiable for use as a loss function?</h3>
+                    <p>FRD in its current form uses PyRadiomics for feature extraction, which is <strong>not differentiable</strong>. However, the Fréchet distance computation itself is differentiable. For training generative models, consider using FRD for evaluation and a differentiable loss (e.g., perceptual loss) during training.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>❓ Where can I find the evaluation framework for testing other metrics?</h3>
+                    <p>The comprehensive evaluation framework used in the paper is available at <a href="https://github.com/mazurowski-lab/medical-image-similarity-metrics">github.com/mazurowski-lab/medical-image-similarity-metrics</a>. It includes scripts for OOD detection, translation evaluation, and metric comparison.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Citation Section -->
+    <section id="citation" class="citation">
+        <div class="container">
+            <h2>Citation</h2>
+            <p>If you use FRD in your research, please cite our paper:</p>
+            
+            <h3>📝 BibTeX</h3>
+            <pre><code>@article{konz2026frd,
+  title={Fréchet Radiomics Distance (FRD): A Versatile Metric for Comparing Medical Imaging Datasets},
+  author={Konz, Nicholas and Osuala, Richard and Verma, Preeti and Chen, Yuwen and Gu, Hanxue and Dong, Haoyu and Chen, Yaqian and Marshall, Andrew and Garrucho, Lidia and Kushibar, Kaisar and Lang, Daniel M. and Kim, Gene S. and Grimm, Lars J. and Lewin, John M. and Duncan, James S. and Schnabel, Julia A. and Diaz, Oliver and Lekadir, Karim and Mazurowski, Maciej A.},
+  journal={Medical Image Analysis},
+  volume={110},
+  pages={103943},
+  year={2026},
+  publisher={Elsevier},
+  doi={10.1016/j.media.2026.103943}
+}</code></pre>
+
+            <h3>🔗 Publication Links</h3>
+            <div class="publication-links">
+                <a href="https://www.sciencedirect.com/science/article/pii/S1361841526000125" class="pub-link">
+                    <strong>Journal Article</strong><br>
+                    Medical Image Analysis, Vol 110 (2026)
+                </a>
+                <a href="https://arxiv.org/abs/2412.01496" class="pub-link">
+                    <strong>arXiv Preprint</strong><br>
+                    arXiv:2412.01496 [cs.CV]
+                </a>
+                <a href="https://github.com/RichardObi/frd-score" class="pub-link">
+                    <strong>Code Repository</strong><br>
+                    FRD Score on GitHub
+                </a>
+                <a href="https://github.com/mazurowski-lab/medical-image-similarity-metrics" class="pub-link">
+                    <strong>Evaluation Framework</strong><br>
+                    Metric Comparison Tools
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 FRD Project. Hosted on <a href="https://pages.github.com/">GitHub Pages</a></p>
+        </div>
+    </footer>
+
+    <script src="static/js/main.js"></script>
+</body>
+</html>
