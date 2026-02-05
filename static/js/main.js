@@ -29,3 +29,23 @@ window.addEventListener('scroll', () => {
         }
     });
 });
+
+// FAQ Dropdown Functionality
+document.querySelectorAll('.faq-question').forEach(button => {
+    button.addEventListener('click', () => {
+        const faqItem = button.parentElement;
+        const answer = faqItem.querySelector('.faq-answer');
+        
+        // Close other open FAQs
+        document.querySelectorAll('.faq-question').forEach(otherButton => {
+            if (otherButton !== button) {
+                otherButton.classList.remove('active');
+                otherButton.parentElement.querySelector('.faq-answer').classList.remove('active');
+            }
+        });
+        
+        // Toggle current FAQ
+        button.classList.toggle('active');
+        answer.classList.toggle('active');
+    });
+});

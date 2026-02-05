@@ -34,12 +34,12 @@
             <p class="subtitle">A Versatile Metric for Comparing Medical Imaging Datasets</p>
             
             <div class="authors">
-                <p><strong>†Nicholas Konz¹, †Richard Osuala²³⁴</strong>, Preeti Verma², Yuwen Chen¹, Hanxue Gu¹, Haoyu Dong¹, Yaqian Chen¹,<br>
+                <p>†Nicholas Konz¹, †Richard Osuala²³⁴, Preeti Verma², Yuwen Chen¹, Hanxue Gu¹, Haoyu Dong¹, Yaqian Chen¹,<br>
                 Andrew Marshall⁸, Lidia Garrucho², Kaisar Kushibar², Daniel M. Lang³⁴, Gene S. Kim⁹, Lars J. Grimm⁵,<br>
                 John M. Lewin⁹¹⁰, James S. Duncan⁸⁹¹⁰¹¹, Julia A. Schnabel³⁴¹², Oliver Diaz²¹³, Karim Lekadir²¹⁴, Maciej A. Mazurowski¹⁵⁶⁷</p>
                 <p style="font-size: 0.9rem; margin-top: 0.5rem;">† Shared first authors</p>
             </div>
-            <br>
+            
             <div class="institutions">
                 <p class="institution-list">
                     <span>¹ Duke University</span> • 
@@ -553,53 +553,73 @@ frd_score = compute_frd(images_1, images_2)</code></pre>
             
             <div class="faq-list">
                 <div class="faq-item">
-                    <h3>❓ When should I use FRD instead of FID?</h3>
-                    <p>Use FRD for any medical imaging application where you're comparing two sets of images. FRD is specifically designed for medical images and offers better correlation with downstream tasks, interpretability, stability on small datasets, and computational efficiency compared to FID.</p>
+                    <button class="faq-question">❓ When should I use FRD instead of FID?</button>
+                    <div class="faq-answer">
+                        <p>Use FRD for any medical imaging application where you're comparing two sets of images. FRD is specifically designed for medical images and offers better correlation with downstream tasks, interpretability, stability on small datasets, and computational efficiency compared to FID.</p>
+                    </div>
                 </div>
                 
                 <div class="faq-item">
-                    <h3>❓ What's the minimum sample size for reliable FRD scores?</h3>
-                    <p>FRD works reliably with as few as <strong>50 images</strong> per distribution, whereas FID typically requires 500+ images for stable estimates. This makes FRD ideal for clinical datasets where acquiring large samples is challenging.</p>
+                    <button class="faq-question">❓ What's the minimum sample size for reliable FRD scores?</button>
+                    <div class="faq-answer">
+                        <p>FRD works reliably with as few as <strong>50 images</strong> per distribution, whereas FID typically requires 500+ images for stable estimates. This makes FRD ideal for clinical datasets where acquiring large samples is challenging.</p>
+                    </div>
                 </div>
                 
                 <div class="faq-item">
-                    <h3>❓ Does FRD work with 3D medical images?</h3>
-                    <p>Yes! FRD supports both <strong>2D and 3D</strong> medical images. The radiomic feature extraction automatically adapts to the image dimensionality.</p>
+                    <button class="faq-question">❓ Does FRD work with 3D medical images?</button>
+                    <div class="faq-answer">
+                        <p>Yes! FRD supports both <strong>2D and 3D</strong> medical images. The radiomic feature extraction automatically adapts to the image dimensionality.</p>
+                    </div>
                 </div>
                 
                 <div class="faq-item">
-                    <h3>❓ Which modalities are supported?</h3>
-                    <p>FRD has been validated on <strong>MRI, CT, and X-ray</strong> imaging. It works with any grayscale medical image where radiomic features can be extracted. For multi-channel images (e.g., RGB), convert to grayscale or extract per-channel features.</p>
+                    <button class="faq-question">❓ Which modalities are supported?</button>
+                    <div class="faq-answer">
+                        <p>FRD has been validated on <strong>MRI, CT, and X-ray</strong> imaging. It works with any grayscale medical image where radiomic features can be extracted. For multi-channel images (e.g., RGB), convert to grayscale or extract per-channel features.</p>
+                    </div>
                 </div>
                 
                 <div class="faq-item">
-                    <h3>❓ How do I interpret FRD scores?</h3>
-                    <p><strong>Lower is better</strong>: FRD = 0 means identical distributions. Higher values indicate greater distributional differences. You can also use FRD's feature importance analysis to identify <em>which specific radiomic features</em> (texture, intensity, shape) differ most between distributions.</p>
+                    <button class="faq-question">❓ How do I interpret FRD scores?</button>
+                    <div class="faq-answer">
+                        <p><strong>Lower is better</strong>: FRD = 0 means identical distributions. Higher values indicate greater distributional differences. You can also use FRD's feature importance analysis to identify <em>which specific radiomic features</em> (texture, intensity, shape) differ most between distributions.</p>
+                    </div>
                 </div>
                 
                 <div class="faq-item">
-                    <h3>❓ Can I use FRD for non-medical images?</h3>
-                    <p>While FRD is optimized for medical imaging, radiomic features are generic texture/intensity descriptors that could apply to other domains (satellite imagery, microscopy, etc.). However, for natural images (photos, paintings), FID may be more appropriate.</p>
+                    <button class="faq-question">❓ Can I use FRD for non-medical images?</button>
+                    <div class="faq-answer">
+                        <p>While FRD is optimized for medical imaging, radiomic features are generic texture/intensity descriptors that could apply to other domains (satellite imagery, microscopy, etc.). However, for natural images (photos, paintings), FID may be more appropriate.</p>
+                    </div>
                 </div>
                 
                 <div class="faq-item">
-                    <h3>❓ How does FRD handle different image sizes or resolutions?</h3>
-                    <p>Radiomic features are extracted per-image and then normalized, so FRD naturally handles <strong>varying image sizes</strong>. However, for fair comparison, ensure both distributions have similar resolution ranges (e.g., don't compare 64x64 images to 512x512 images).</p>
+                    <button class="faq-question">❓ How does FRD handle different image sizes or resolutions?</button>
+                    <div class="faq-answer">
+                        <p>Radiomic features are extracted per-image and then normalized, so FRD naturally handles <strong>varying image sizes</strong>. However, for fair comparison, ensure both distributions have similar resolution ranges (e.g., don't compare 64x64 images to 512x512 images).</p>
+                    </div>
                 </div>
                 
                 <div class="faq-item">
-                    <h3>❓ Do I need segmentation masks?</h3>
-                    <p>No segmentation required by default. FRD extracts features from the entire image (or a bounding box around non-background regions). However, if you have organ/lesion masks, you can provide them to focus FRD on specific anatomical regions.</p>
+                    <button class="faq-question">❓ Do I need segmentation masks?</button>
+                    <div class="faq-answer">
+                        <p>No segmentation required by default. FRD extracts features from the entire image (or a bounding box around non-background regions). However, if you have organ/lesion masks, you can provide them to focus FRD on specific anatomical regions.</p>
+                    </div>
                 </div>
                 
                 <div class="faq-item">
-                    <h3>❓ Is FRD differentiable for use as a loss function?</h3>
-                    <p>FRD in its current form uses PyRadiomics for feature extraction, which is <strong>not differentiable</strong>. However, the Fréchet distance computation itself is differentiable. For training generative models, consider using FRD for evaluation and a differentiable loss (e.g., perceptual loss) during training.</p>
+                    <button class="faq-question">❓ Is FRD differentiable for use as a loss function?</button>
+                    <div class="faq-answer">
+                        <p>FRD in its current form uses PyRadiomics for feature extraction, which is <strong>not differentiable</strong>. However, the Fréchet distance computation itself is differentiable. For training generative models, consider using FRD for evaluation and a differentiable loss (e.g., perceptual loss) during training.</p>
+                    </div>
                 </div>
                 
                 <div class="faq-item">
-                    <h3>❓ Where can I find the evaluation framework for testing other metrics?</h3>
-                    <p>The comprehensive evaluation framework used in the paper is available at <a href="https://github.com/mazurowski-lab/medical-image-similarity-metrics">github.com/mazurowski-lab/medical-image-similarity-metrics</a>. It includes scripts for OOD detection, translation evaluation, and metric comparison.</p>
+                    <button class="faq-question">❓ Where can I find the evaluation framework for testing other metrics?</button>
+                    <div class="faq-answer">
+                        <p>The comprehensive evaluation framework used in the paper is available at <a href="https://github.com/mazurowski-lab/medical-image-similarity-metrics">github.com/mazurowski-lab/medical-image-similarity-metrics</a>. It includes scripts for OOD detection, translation evaluation, and metric comparison.</p>
+                    </div>
                 </div>
             </div>
         </div>
