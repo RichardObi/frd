@@ -4,7 +4,7 @@ A modern landing page for the **Fréchet Radiomics Distance (FRD)** paper - a ve
 
 ## Overview
 
-This repository hosts the official landing page for the FRD project at https://richardobi.github.io/frd-website (or your custom domain).
+This repository hosts the official landing page for the FRD project at https://richardobi.github.io/frd (or your custom domain).
 
 FRD is a perceptual metric tailored for medical images that utilizes standardized, clinically meaningful, and interpretable radiomics features. It outperforms existing image distribution metrics across multiple medical imaging applications including:
 
@@ -109,7 +109,7 @@ Modify colors and layout in `static/css/style.css`:
 1. Push to a repository on GitHub
 2. Go to **Settings → Pages**
 3. Select `main` branch as source
-4. Site will be available at `https://username.github.io/frd-website`
+4. Site will be available at `https://username.github.io/frd`
 
 ### Custom Domain
 
@@ -128,7 +128,7 @@ echo "your-domain.com" > CNAME
 
 ## Authors
 
-**Lead Authors**: Nicholas Konz (Duke), Richard Osuala (Barcelona/Munich), Maciej A. Mazurowski (Duke)
+**Lead Authors**: Nicholas Konz (Duke), Richard Osuala (Barcelona/Munich), Karim Lekadir (Barcelona), Maciej A. Mazurowski (Duke)
 
 **Contributing Institutions**: Duke University, Universitat de Barcelona, Helmholtz Munich, Technical University Munich, Yale University, King's College London
 
