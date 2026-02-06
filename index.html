@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fréchet Radiomics Distance (FRD)</title>
+    <title>Fréchet Radiomic Distance (FRD)</title>
     <meta name="description" content="A versatile metric for comparing medical imaging datasets using standardized, clinically meaningful features.">
     <link rel="stylesheet" href="static/css/style.css">
 </head>
@@ -30,13 +30,13 @@
     <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="container hero-content">
-            <h1>Fréchet Radiomics Distance</h1>
+            <h1>Fréchet Radiomic Distance</h1>
             <p class="subtitle">A Versatile Metric for Comparing Medical Imaging Datasets</p>
             
             <div class="authors">
-                <p>†Nicholas Konz¹, †Richard Osuala²³⁴, Preeti Verma², Yuwen Chen¹, Hanxue Gu¹, Haoyu Dong¹, Yaqian Chen¹,<br>
-                Andrew Marshall⁸, Lidia Garrucho², Kaisar Kushibar², Daniel M. Lang³⁴, Gene S. Kim⁹, Lars J. Grimm⁵,<br>
-                John M. Lewin⁹¹⁰, James S. Duncan⁸⁹¹⁰¹¹, Julia A. Schnabel³⁴¹², Oliver Diaz²¹³, Karim Lekadir²¹⁴, Maciej A. Mazurowski¹⁵⁶⁷</p>
+                <p>†Nicholas Konz¹, †Richard Osuala²˒³˒⁴, Preeti Verma², Yuwen Chen¹, Hanxue Gu¹, Haoyu Dong¹, Yaqian Chen¹,<br>
+                Andrew Marshall⁵, Lidia Garrucho², Kaisar Kushibar², Daniel M. Lang³˒⁴, Gene S. Kim¹, Lars J. Grimm¹,<br>
+                John M. Lewin⁵, James S. Duncan⁵, Julia A. Schnabel³˒⁴˒⁶, Oliver Diaz²˒⁷, Karim Lekadir²˒⁸, Maciej A. Mazurowski¹</p>
                 <p style="font-size: 0.9rem; margin-top: 0.5rem;">† Shared first authors</p>
             </div>
             
@@ -46,16 +46,16 @@
                     <span>² Universitat de Barcelona</span> • 
                     <span>³ Helmholtz Munich</span> • 
                     <span>⁴ Technical University Munich</span> • 
-                    <span>⁵ Duke University Hospital</span> •<br>
-                    <span>⁶ Duke AI Health</span> • 
-                    <span>⁷ Duke School of Medicine</span> • 
-                    <span>⁸ Yale University</span> • 
-                    <span>⁹ Duke Cancer Institute</span> • 
-                    <span>¹⁰ Yale School of Medicine</span> •<br>
-                    <span>¹¹ Yale School of Engineering & Applied Science</span> • 
-                    <span>¹² King's College London</span> • 
-                    <span>¹³ University of Barcelona Medical Center</span> • 
-                    <span>¹⁴ Barcelona Supercomputing Center</span>
+                    <!--  <span>⁵ Duke University Hospital</span> •<br> -->
+                    <!--  <span>⁶ Duke AI Health</span> •  -->
+                    <!--  <span>⁷ Duke School of Medicine</span> • -->
+                    <span>⁵ Yale University</span> • <br>
+                    <!--  <span>⁹ Duke Cancer Institute</span> • -->
+                    <!--  <span>¹⁰ Yale School of Medicine</span> •<br> -->
+                    <!--  <span>¹¹ Yale School of Engineering & Applied Science</span> •  -->
+                    <span>⁶ King's College London</span> • 
+                    <span>⁷ Computer Vision Center (UAB) </span> • 
+                    <span>⁸ Institució Catalana de Recerca i Estudis Avançats (ICREA)</span>
                 </p>
             </div>
             
@@ -75,15 +75,15 @@
     <!-- About Section -->
     <section id="about" class="about">
         <div class="container">
-            <h2>About FRD</h2>
+            <h2>About Fréchet Radiomic Distance (FRD)</h2>
             <div class="content-grid">
                 <div>
                     <h3>The Problem</h3>
-                    <p>Determining whether two sets of medical images belong to the same or different distributions is crucial for evaluating generative models and detecting out-of-domain samples. Current metrics either rely on biased downstream tasks or adopt task-independent perceptual metrics from natural imaging.</p>
+                    <p>Determining whether two sets of medical images (f.e. synthetic and real) belong to the same or different distributions is crucial for evaluating generative models and detecting out-of-domain samples. Current metrics either rely on specific narrow downstream tasks (f.e. classification) or adopt task-independent perceptual metrics from natural imaging.</p>
                 </div>
                 <div>
                     <h3>Our Solution</h3>
-                    <p>FRD is a perceptual metric tailored for medical images that utilizes standardized, clinically meaningful, and interpretable radiomics features. Superior to existing metrics across multiple medical imaging applications.</p>
+                    <p>FRD is a perceptual metric tailored for medical images that utilizes standardized, clinically meaningful, and interpretable radiomics features to compare image sets. It is superior to existing metrics across multiple medical imaging applications.</p>
                 </div>
             </div>
         </div>
@@ -100,7 +100,7 @@
                 <div class="example-description" style="margin-top: 2rem; text-align: center; max-width: 650px; margin-left: auto; margin-right: auto;">
                     <p><strong>Left:</strong> Source data: For example images generated by generative AI</p>
                     <p><strong>Right:</strong> Target data: Images drawn from a real dataset</p>
-                    <p><strong>Middle:</strong> Compare the data using the Fréchet Radiomics Distance (FRD)</p>
+                    <p><strong>Middle:</strong> Compare the data using the Fréchet Radiomic Distance (FRD)</p>
                     <p style="margin-top: 1.5rem; padding: 1rem; background: #e0f2fe; border-left: 4px solid var(--primary-color); border-radius: 0.25rem;">
                         <strong>Result:</strong> FRD score quantifies how different the distributions are. <br> Lower = more similar to real data.
                     </p>
@@ -569,7 +569,11 @@ frd_score = compute_frd(images_1, images_2)</code></pre>
                 <div class="faq-item">
                     <button class="faq-question">❓ Does FRD work with 3D medical images?</button>
                     <div class="faq-answer">
-                        <p>Yes! FRD supports both <strong>2D and 3D</strong> medical images. The radiomic feature extraction automatically adapts to the image dimensionality.</p>
+                        <p>Yes! FRD supports both <strong>2D and 3D</strong> medical images. The radiomic feature extraction process can be seamlessly adapted to the image dimensionality. An initial experiment for FRD v0 (<a href="https://arxiv.org/abs/2403.13890" class="arxiv-link" target="_blank">version v0</a>) showed that the image quality capture for 2D and 3D features was comparable. Check it out: </p>
+                        <div class="faq-figure-container">
+                            <img src="static/images/2d-vs-3d-features.png" alt="Comparison of 2D vs. 3D features for FRD using image perturbation scales.">
+                            <p class="faq-figure-caption">Figure: Comparison of 2D vs. 3D features for FRD (v0). Both capture image quality differences comparably, suggesting similar performances for 2D and 3D features.</p>
+                        </div>
                     </div>
                 </div>
                 
@@ -633,7 +637,7 @@ frd_score = compute_frd(images_1, images_2)</code></pre>
             
             <h3>📝 BibTeX</h3>
             <pre><code>@article{konz2026frd,
-  title={Fréchet Radiomics Distance (FRD): A Versatile Metric for Comparing Medical Imaging Datasets},
+  title={Fréchet Radiomic Distance (FRD): A Versatile Metric for Comparing Medical Imaging Datasets},
   author={Konz, Nicholas and Osuala, Richard and Verma, Preeti and Chen, Yuwen and Gu, Hanxue and Dong, Haoyu and Chen, Yaqian and Marshall, Andrew and Garrucho, Lidia and Kushibar, Kaisar and Lang, Daniel M. and Kim, Gene S. and Grimm, Lars J. and Lewin, John M. and Duncan, James S. and Schnabel, Julia A. and Diaz, Oliver and Lekadir, Karim and Mazurowski, Maciej A.},
   journal={Medical Image Analysis},
   volume={110},

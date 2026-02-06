@@ -1,6 +1,6 @@
 # FRD Landing Page
 
-A modern landing page for the **Fréchet Radiomics Distance (FRD)** paper - a versatile metric for comparing medical imaging datasets.
+A modern landing page for the **Fréchet Radiomic Distance (FRD)** paper - a versatile metric for comparing medical imaging datasets.
 
 ## Overview
 
@@ -41,7 +41,7 @@ frd-website/
 6. **Benchmarks**: Comparative tables (FRD vs. FID, RadFID, LPIPS)
 7. **Datasets**: Overview of validated datasets (Brain MRI, Breast MRI, Chest X-ray, Abdominal CT/MRI)
 8. **Code**: Installation, quick start, features list
-9. **Team**: Institutions and collaborators across Duke, UBarcelona, Helmholtz, Yale
+9. **Team**: Institutions and collaborators across Duke, Barcelona, Helmholtz, Yale
 10. **FAQ**: 10+ common questions with detailed answers
 11. **Citation**: BibTeX with journal and arXiv links
 
